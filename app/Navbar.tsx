@@ -46,8 +46,6 @@ export default function Navbar(){
                   className="h-10 w-auto"
                   src="/logo.png"
                   alt="Count Me In"
-                  width={50}
-                  height={50}
                 />
               </div>
               <div className="hidden sm:ml-6 sm:block">

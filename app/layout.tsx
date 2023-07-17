@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Count Me In',
-  description: 'An acitivities discovery and teaming up app',
+  description: 'An acitivities discovery and teaming up app'
 }
 
 export default function RootLayout({
@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      <link rel="icon" href="/icon.png" />
+      <link rel="icon" href="/logo.png" />
       </head>
       <body className={inter.className}>
         <Navbar />
