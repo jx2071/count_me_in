@@ -1,28 +1,29 @@
 'use client';
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-
+import { Bars3Icon, PlusIcon , XMarkIcon } from '@heroicons/react/24/outline'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation';
 type Navigation = {
     name:string,
     href:string,
     current:boolean
 }
 
-const navigation: Navigation[] = [
-    { name: 'Home', href: '/', current: true },
-    { name: 'Discover', href: 'dicsover', current: false },
-    { name: 'Activities', href: 'activities', current: false },
-    { name: 'Team', href: 'team', current: false },
-    { name: 'Calendar', href: 'calendar', current: false },
-  ]
-
-
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
 export default function Navbar(){
+const location = usePathname();
+
+const navigation: Navigation[] = [
+  { name: 'Home', href: '/', current: location === "/" },
+  { name: 'Discover', href: 'discover', current: location === "/discover" },
+  { name: 'Activity', href: 'activities', current: location === "/activities" },
+  { name: 'Team', href: 'team', current: location === "/team" },
+  { name: 'Calendar', href: 'calendar', current: location === "/calendar" },
+]
 
     return <Disclosure as="nav" className="bg-gray-800 fixed top-0 w-full z-20">
     {({ open }) => (
@@ -51,7 +52,7 @@ export default function Navbar(){
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
                   {navigation.map((item) => (
-                    <a
+                    <Link
                       key={item.name}
                       href={item.href}
                       className={classNames(
@@ -61,19 +62,20 @@ export default function Navbar(){
                       aria-current={item.current ? 'page' : undefined}
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              <button
+              <a
                 type="button"
-                className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                className="event-create cursor-pointer rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    href="/create"
               >
-                <span className="sr-only">View notifications</span>
-                <BellIcon className="h-6 w-6" aria-hidden="true" />
-              </button>
+                <span className="event-create-tooltip">Create Event</span>
+                <PlusIcon  className="h-6 w-6" aria-hidden="true" />
+              </a>
 
               {/* Profile dropdown */}
               <Menu as="div" className="relative ml-3">
