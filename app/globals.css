@@ -25,3 +25,24 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+
+.event-create-tooltip {
+  position:absolute;
+  font-size:0.9rem;
+  color:rgb(0, 0, 0);
+  width:auto;
+  top:50px;
+  right:40px;
+  padding:2px 5px 2px 5px  ;
+  background-color: lightgray;
+  border-radius: 5px;
+  border: gray 1px solid;
+  opacity: 0;
+}
+
+.event-create:hover .event-create-tooltip {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
