@@ -1,4 +1,7 @@
+"use client";
 import { UserPlusIcon , FireIcon  } from '@heroicons/react/20/solid'
+import fetchDiscoverAPIs from '../api/DiscoverAPI'
+import {useState,useEffect} from 'react'
 
 export type Event = {
     id:string,
@@ -12,60 +15,65 @@ export type Event = {
     imageUrl:string
 }
 
-const events:Event[] = [
-  {
-    id:"1",
-    name: 'Casual Poker Party',
-    category: 'Entertainment',
-    start_time: '07/20/2023 14:00 PM',
-    location: 'Williamsburg, Brooklyn',
-    duration: '2 hours',
-    max_person: 6,
-    current_person: 3,
-    imageUrl:
-      'https://www.tightpoker.com/app/uploads/2023/01/Ultimate-Texas-Holdem-2-scaled-1.jpg',
-  },
-  {
-    id:"2",
-    name: 'Catan Night',
-    category: 'Entertainment',
-    start_time: '07/20/2023 19:00 PM',
-    location: 'Long Island City, Queens',
-    duration: '2 hours',
-    max_person: 4,
-    current_person: 1,
-    imageUrl:
-      'https://shop.asmodee.com/product/image/large/cn3071-5.jpg',
-  },
-  {
-    id:"3",
-    name: 'Badminton Play',
-    category: 'Sports',
-    start_time: '07/20/2023 12:00 PM',
-    location: 'Rego Park, Brooklyn',
-    duration: '4 hours',
-    max_person: 2,
-    current_person: 2,
-    imageUrl:
-      'https://www.sportsengine.com/sites/default/files/styles/content_1024_w/public/images/shutterstock_1493553380.jpg?itok=IfOk6QOh',
-  },
-]
-
 export default function Discover() {
+  const[events,setEvents] = useState<Event[]>([])
+  const[loading,setLoading] = useState<boolean>(true)
+  useEffect(() => {
+    fetchDiscoverAPIs(setEvents,setLoading)
+  },[])
 
     const progress = (current:number, max:number) => {
         return (current/max)*100+"%";
     }
 
-  return (
-    <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2">
-      {events.map((event) => (
+    const sketelon = [1,2,3,4,5,6,7,8,9,10]
+    if(loading === true){
+      return (
+        <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2">
+      {sketelon.map((event) => (
         <li
-          key={event.id}
+        key={event}
+          className=" animate-pulse col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
+          >
+          <div className="flex flex-1 flex-col p-8" style={{width:"30rem"}}>
+            <div className="mx-auto object-cover bg-slate-200 rounded" style={{width:"100%",height:"200px"}} ></div>
+            <h2 className="mt-6 text-lg font-medium text-gray-900"></h2>
+            <dl className="mt-4 gap-2 flex flex-grow flex-col justify-between text-left">
+              <dd className="text-sm text-gray-500">
+              <div className="mb-4 bg-slate-200 h-1.5 rounded-full dark:bg-green-500"></div></dd>
+              <dd className="text-sm text-gray-500">
+              <div className="mb-4 bg-slate-200 h-1.5 rounded-full dark:bg-green-500"></div>
+                </dd>
+                <dd className="text-sm text-gray-500">
+                <div className="mb-4 bg-slate-200 h-1.5 rounded-full dark:bg-green-500"></div>
+                </dd>
+                <dd className="text-sm text-gray-500">
+                <div className="mb-4 bg-slate-200 h-1.5 rounded-full dark:bg-green-500"></div>
+                </dd>
+              <dt className="sr-only">Progress</dt>
+              <dd className="mt-3 flex flex-row">
+              <div className="w-3/4 bg-slate-200 rounded-full h-1.5 mt-2 dark:bg-green-500 ">
+              <div className="bg-slate-200 h-1.5 rounded-full dark:bg-green-500"></div>
+              </div>
+              </dd>
+
+            </dl>
+            </div>
+          </li>))}
+                </ul>
+                )
+    }
+    else if(loading === false){
+
+      return (
+        <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2">
+      {events && events.map((event) => (
+        <li
+        key={event.id}
           className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
-        >
+          >
           <div className="flex flex-1 flex-col p-8">
-            <img className="mx-auto w-full object-cover max-h-60 flex-shrink-0" src={event.imageUrl} alt="" />
+            <img className="mx-auto w-full object-cover max-h-60 flex-shrink-0" src={`data:image/jpeg;base64,${event.imageUrl}`} alt="" />
             <h2 className="mt-6 text-lg font-medium text-gray-900">{event.name}</h2>
             <dl className="mt-4 gap-2 flex flex-grow flex-col justify-between text-left">
               <dt className="sr-only">Category</dt>
@@ -115,7 +123,7 @@ export default function Discover() {
               <div className="flex w-0 flex-1">
                 <a
                   className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
-                >
+                  >
                   <UserPlusIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                   Join
                 </a>
@@ -134,4 +142,5 @@ export default function Discover() {
       ))}
     </ul>
   )
+}
 }
