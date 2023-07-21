@@ -1,6 +1,18 @@
 import { UserPlusIcon , FireIcon  } from '@heroicons/react/20/solid'
 
-const events = [
+export type Event = {
+    id:string,
+    name:string,
+    category:string,
+    start_time:string,
+    location:string,
+    duration:string,
+    max_person:number,
+    current_person:number,
+    imageUrl:string
+}
+
+const events:Event[] = [
   {
     id:"1",
     name: 'Casual Poker Party',
