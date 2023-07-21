@@ -26,7 +26,7 @@ export default function Discover() {
         return (current/max)*100+"%";
     }
 
-    const sketelon = [1,2,3,4,5,6,7,8,9,10]
+    const sketelon = [1,2,3,4,5,6]
     if(loading === true){
       return (
         <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2">
@@ -37,18 +37,18 @@ export default function Discover() {
           >
           <div className="flex flex-1 flex-col p-8" style={{width:"30rem"}}>
             <div className="mx-auto object-cover bg-slate-200 rounded" style={{width:"100%",height:"200px"}} ></div>
-            <h2 className="mt-6 text-lg font-medium text-gray-900"></h2>
+            <div className="mt-6 mb-4 mx-5 h-2 roundead bg-slate-200"></div>
             <dl className="mt-4 gap-2 flex flex-grow flex-col justify-between text-left">
               <dd className="text-sm text-gray-500">
-              <div className="mb-4 bg-slate-200 h-1.5 rounded-full dark:bg-green-500"></div></dd>
+              <div className="mb-4 bg-slate-200 h-1.5 rounded dark:bg-green-500"></div></dd>
               <dd className="text-sm text-gray-500">
-              <div className="mb-4 bg-slate-200 h-1.5 rounded-full dark:bg-green-500"></div>
+              <div className="mb-4 bg-slate-200 h-1.5 rounded dark:bg-green-500"></div>
                 </dd>
                 <dd className="text-sm text-gray-500">
-                <div className="mb-4 bg-slate-200 h-1.5 rounded-full dark:bg-green-500"></div>
+                <div className="mb-4 bg-slate-200 h-1.5 rounded dark:bg-green-500"></div>
                 </dd>
                 <dd className="text-sm text-gray-500">
-                <div className="mb-4 bg-slate-200 h-1.5 rounded-full dark:bg-green-500"></div>
+                <div className="mb-4 bg-slate-200 h-1.5 rounded dark:bg-green-500"></div>
                 </dd>
               <dt className="sr-only">Progress</dt>
               <dd className="mt-3 flex flex-row">
@@ -73,7 +73,7 @@ export default function Discover() {
           className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
           >
           <div className="flex flex-1 flex-col p-8">
-            <img className="mx-auto w-full object-cover max-h-60 flex-shrink-0" src={`data:image/jpeg;base64,${event.imageUrl}`} alt="" />
+            <img className="mx-auto w-full object-cover max-h-60 flex-shrink-0" style={{height:"280px"}} src={`data:image/jpeg;base64,${event.imageUrl}`} alt="" />
             <h2 className="mt-6 text-lg font-medium text-gray-900">{event.name}</h2>
             <dl className="mt-4 gap-2 flex flex-grow flex-col justify-between text-left">
               <dt className="sr-only">Category</dt>
@@ -94,9 +94,9 @@ export default function Discover() {
                 {event.location}</dd>
                 <dd className="text-sm text-gray-500">
                 <span className="text-black">
-                ⏳ Duration:{" "}
+                ⏳ Duration:{" "} 
                 </span>
-                {event.duration}</dd>
+                {event.duration} Hours</dd>
               <dt className="sr-only">Progress</dt>
               <dd className="mt-3 flex flex-row">
                 {event.current_person !== event.max_person ? (<>
