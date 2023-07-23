@@ -19,10 +19,10 @@ const location = usePathname();
 
 const navigation: Navigation[] = [
   { name: 'Home', href: '/', current: location === "/" },
-  { name: 'Discover', href: 'discover', current: location === "/discover" },
-  { name: 'Activity', href: 'activities', current: location === "/activities" },
-  { name: 'Team', href: 'team', current: location === "/team" },
-  { name: 'Calendar', href: 'calendar', current: location === "/calendar" },
+  { name: 'Discover', href: '/discover', current: location === "/discover" },
+  { name: 'Activity', href: '/activities', current: location === "/activities" },
+  { name: 'Team', href: '/team', current: location === "/team" },
+  { name: 'Calendar', href: '/calendar', current: location === "/calendar" },
 ]
 
     return <Disclosure as="nav" className="bg-gray-800 fixed top-0 w-full z-20">

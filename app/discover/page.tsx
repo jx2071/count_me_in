@@ -2,6 +2,7 @@
 import { UserPlusIcon , FireIcon  } from '@heroicons/react/20/solid'
 import fetchDiscoverAPIs from '../api/DiscoverAPI'
 import {useState,useEffect} from 'react'
+import Link from 'next/link'
 
 export type Event = {
     id:string,
@@ -129,12 +130,13 @@ export default function Discover() {
                 </a>
               </div>
               <div className="-ml-px flex w-0 flex-1">
-                <a
-                  className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                <Link
+                href={`/event?eventId=${event.id}`}
+                  className="cursor-pointer relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
                 >
                   <FireIcon  className="h-5 w-5 text-gray-400" aria-hidden="true" />
                   Details
-                </a>
+                </Link>
               </div>
             </div>
           </div>
