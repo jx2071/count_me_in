@@ -5,7 +5,7 @@ export default async function fetchEventAPIs(
   setEventData,
   setLoading
 ) {
-  const eventAPI = `https://jsonplaceholder.typicode.com/posts?id=${eventId}`;
+  const eventAPI = `https://2w742f76z1.execute-api.us-east-1.amazonaws.com/dev/CMI-Dev-Event-Details?event_id=${eventId}`;
 
   axios
     .get(eventAPI)
