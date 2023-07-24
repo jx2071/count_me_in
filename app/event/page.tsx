@@ -183,7 +183,7 @@ export default function Event() {
                     {eventData.current_person !== eventData.max_person ? (
                       <>
                         🎊 Current Party Size: &nbsp;
-                        <div className="w-4/6 bg-green-100 rounded-full h-1.5 mt-2 dark:bg-green-500 ">
+                        <div className="w-1/2 bg-green-100 rounded-full h-1.5 mt-2 dark:bg-green-500 ">
                           <div
                             className="bg-green-600 h-1.5 rounded-full dark:bg-green-500"
                             style={{
@@ -201,7 +201,7 @@ export default function Event() {
                     ) : (
                       <>
                         🎊 Party Full: &nbsp;
-                        <div className="w-4/6 bg-red-100 rounded-full h-1.5 mt-2 dark:bg-red-500 ">
+                        <div className="w-1/2 bg-red-100 rounded-full h-1.5 mt-2 dark:bg-red-500 ">
                           <div
                             className="bg-red-600 h-1.5 rounded-full dark:bg-red-500"
                             style={{
@@ -229,7 +229,7 @@ export default function Event() {
                     </span>
                   </dd>
                   <dd className="text-emerald-700">
-                    🪪 Requirement:{" "}
+                    👩🏼‍🤝‍👨🏾 Requirement:{" "}
                     <span className="text-black">{eventData.requirement}</span>
                   </dd>
                   <dd className=" text-blue-400">
@@ -240,7 +240,7 @@ export default function Event() {
                     </span>
                   </dd>
                   <dd className="text-blue-500">
-                    🛎 Gather Location:{" "}
+                    🛎️ Gather Location:{" "}
                     <span className="text-black">
                       {eventData.gather_location}
                     </span>

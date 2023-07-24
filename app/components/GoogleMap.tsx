@@ -1,5 +1,6 @@
 export default function GoogleMap(props: { location: string; show: boolean }) {
   const { location, show } = props;
+  const api_key = process.env.GOOGLE_MAPS_API_KEY;
   if (show) {
     return (
       <>
@@ -11,7 +12,7 @@ export default function GoogleMap(props: { location: string; show: boolean }) {
           loading="lazy"
           allowFullScreen={false}
           referrerPolicy="no-referrer-when-downgrade"
-          src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyCTxDEPkK-7yFbbIDFnz3D8SkxWutvarxU&q=${encodeURIComponent(
+          src={`https://www.google.com/maps/embed/v1/place?key=${api_key}&q=${encodeURIComponent(
             location
           )}}&zoom=14`}
         ></iframe>
