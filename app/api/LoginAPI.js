@@ -4,24 +4,37 @@ export default async function postLoginAPI(
   loginData,
   setIncorrectLogin,
   setLogedIn,
-  setLoginData
+  setLoginData,
+  setAvatar
 ) {
   const { email, password } = loginData;
-  console.log("email: ", email);
-  console.log("password: ", password);
   const hashedPassword = sha256(password + email);
-  console.log("hashedPassword: ", hashedPassword);
-  if (
-    email === "a@a.com" &&
-    hashedPassword ===
-      "0faad6486f315545eea81998bfbdbce03f65772e51f556a1d78a8aa743eb0c3b"
-  ) {
-    setLogedIn(true);
-    setIncorrectLogin(false);
-  } else {
-    setIncorrectLogin(true);
-    setLogedIn(false);
-  }
+  const LoginAPI = `https://2w742f76z1.execute-api.us-east-1.amazonaws.com/dev/CMI-Dev-Login-Auth`;
+
+  axios
+    .post(LoginAPI, {
+      user_name: email,
+      password_hash: hashedPassword,
+    })
+    .then((response) => {
+      setLogedIn(true);
+      setIncorrectLogin(false);
+      setAvatar(response.data.avatar);
+      let userInfo = {
+        user_name: response.data.user_name,
+        first_name: response.data.first_name,
+        last_name: response.data.last_name,
+        gender: response.data.gender,
+        token: response.data.token,
+      };
+      window.sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+    })
+    .catch((error) => {
+      setIncorrectLogin(true);
+      setLogedIn(false);
+      console.log(error);
+    });
+
   setLoginData({
     ...loginData,
     password: "",

@@ -4,8 +4,9 @@ import {
   CheckCircleIcon,
   XMarkIcon,
 } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import postLoginAPI from "../api/LoginAPI";
+import { useAvatar } from "../context/avatarContext";
 
 export default function LoginPage() {
   const [loginData, setLoginData] = useState({
@@ -15,14 +16,26 @@ export default function LoginPage() {
   const { email, password } = loginData;
   const [incorrectLogin, setIncorrectLogin] = useState(false);
   const [logedIn, setLogedIn] = useState(false);
+  const { setAvatar } = useAvatar();
 
   const handleLogin = async () => {
     if (!email || !password) {
       return;
     }
-    postLoginAPI(loginData, setIncorrectLogin, setLogedIn, setLoginData);
+    postLoginAPI(
+      loginData,
+      setIncorrectLogin,
+      setLogedIn,
+      setLoginData,
+      setAvatar
+    );
   };
 
+  useEffect(() => {
+    if (logedIn) {
+      //window.location.href = window.sessionStorage.getItem("previous") ?? "/";
+    }
+  }, [logedIn]);
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-12 lg:px-8">

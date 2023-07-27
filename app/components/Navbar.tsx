@@ -5,6 +5,8 @@ import { Bars3Icon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { UserCircleIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAvatar } from "../context/avatarContext";
+
 type Navigation = {
   name: string;
   href: string;
@@ -29,6 +31,8 @@ export default function Navbar() {
     { name: "Team", href: "/team", current: location === "/team" },
     { name: "Calendar", href: "/calendar", current: location === "/calendar" },
   ];
+
+  const { avatar } = useAvatar();
 
   return (
     <Disclosure as="nav" className="bg-gray-800 fixed top-0 w-full z-20">
@@ -90,10 +94,18 @@ export default function Navbar() {
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="sr-only">Open user menu</span>
-                      <UserCircleIcon
-                        className="h-10 w-10 text-white rounded-full"
-                        aria-hidden="true"
-                      />
+                      {avatar ? (
+                        <img
+                          className="mx-auto h-10 w-10 object-cover max-h-60 flex-shrink-0"
+                          src={`data:image/jpeg;base64,${avatar}`}
+                          alt=""
+                        />
+                      ) : (
+                        <UserCircleIcon
+                          className="h-10 w-10 text-white rounded-full"
+                          aria-hidden="true"
+                        />
+                      )}
                     </Menu.Button>
                   </div>
                   <Transition
@@ -108,15 +120,21 @@ export default function Navbar() {
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="/login"
+                          <button
+                            onClick={() => {
+                              window.sessionStorage.setItem(
+                                "previous",
+                                window.location.href
+                              );
+                              window.location.href = "login";
+                            }}
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              "block px-4 py-2 text-sm text-left text-gray-700 w-full"
                             )}
                           >
                             Sign in
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                     </Menu.Items>
