@@ -1,10 +1,11 @@
-import { Inter } from 'next/font/google'
-import Navbar from './components/Navbar'
-
+import { Inter } from "next/font/google";
+import Navbar from "./components/Navbar";
+import { UserInfoProvider } from "./context/userInfoContext";
 export default function NotFound() {
-return(
-    <body className="bg-white">
-      <Navbar />
+  return (
+    <UserInfoProvider>
+      <body className="bg-white">
+        <Navbar />
         <main className="flex min-h-fit flex-col items-center justify-between p-24 mt-40">
           <p className="text-base font-semibold text-indigo-600">404</p>
           <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
@@ -23,6 +24,6 @@ return(
           </div>
         </main>
       </body>
-
+    </UserInfoProvider>
   );
 }

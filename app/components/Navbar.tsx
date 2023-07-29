@@ -1,14 +1,12 @@
 "use client";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import {
-  Bars3Icon,
-  PlusIcon,
-  XMarkIcon,
-  UserCircleIcon,
-} from "@heroicons/react/24/outline";
+import { Bars3Icon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { UserCircleIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { UserInfoData, useUserInfo } from "../context/userInfoContext";
+
 type Navigation = {
   name: string;
   href: string;
@@ -33,6 +31,8 @@ export default function Navbar() {
     { name: "Team", href: "/team", current: location === "/team" },
     { name: "Calendar", href: "/calendar", current: location === "/calendar" },
   ];
+  const { userInfo, setUserInfo } = useUserInfo();
+  const { avatar } = userInfo;
 
   return (
     <Disclosure as="nav" className="bg-gray-800 fixed top-0 w-full z-20">
@@ -80,24 +80,34 @@ export default function Navbar() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <a
-                  type="button"
-                  className="event-create cursor-pointer rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  href="/create"
-                >
-                  <span className="event-create-tooltip">Create Event</span>
-                  <PlusIcon className="h-6 w-6" aria-hidden="true" />
-                </a>
+                {avatar && (
+                  <a
+                    type="button"
+                    className="event-create cursor-pointer rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    href="/create"
+                  >
+                    <span className="event-create-tooltip">Create Event</span>
+                    <PlusIcon className="h-6 w-6" aria-hidden="true" />
+                  </a>
+                )}
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="sr-only">Open user menu</span>
-                      <UserCircleIcon
-                        className="h-10 w-10 text-white rounded-full"
-                        aria-hidden="true"
-                      />
+                      {avatar ? (
+                        <img
+                          className="mx-auto h-10 w-10 object-cover max-h-60 flex-shrink-0"
+                          src={`data:image/jpeg;base64,${avatar}`}
+                          alt=""
+                        />
+                      ) : (
+                        <UserCircleIcon
+                          className="h-10 w-10 text-white rounded-full"
+                          aria-hidden="true"
+                        />
+                      )}
                     </Menu.Button>
                   </div>
                   <Transition
@@ -110,45 +120,59 @@ export default function Navbar() {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                      {!avatar ? (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <button
+                              onClick={() => {
+                                window.sessionStorage.setItem(
+                                  "previous",
+                                  window.location.href
+                                );
+                                window.location.href = "login";
+                              }}
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-left text-gray-700 w-full"
+                              )}
+                            >
+                              Sign in
+                            </button>
+                          )}
+                        </Menu.Item>
+                      ) : (
+                        <>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href="/profile"
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-left text-gray-700"
+                                )}
+                              >
+                                Profile
+                              </a>
                             )}
-                          >
-                            Your Profile
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                onClick={() => {
+                                  window.sessionStorage.clear();
+                                  setUserInfo({} as UserInfoData);
+                                }}
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-left text-gray-700 w-full"
+                                )}
+                              >
+                                Sign out
+                              </button>
                             )}
-                          >
-                            Settings
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Sign out
-                          </a>
-                        )}
-                      </Menu.Item>
+                          </Menu.Item>
+                        </>
+                      )}
                     </Menu.Items>
                   </Transition>
                 </Menu>
