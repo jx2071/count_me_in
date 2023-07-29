@@ -2,7 +2,7 @@
 import { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { UserCircleIcon } from "@heroicons/react/20/solid";
+import { UserCircleIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserInfoData, useUserInfo } from "../context/userInfoContext";
@@ -98,7 +98,7 @@ export default function Navbar() {
                       <span className="sr-only">Open user menu</span>
                       {avatar ? (
                         <img
-                          className="mx-auto h-10 w-10 object-cover max-h-60 flex-shrink-0"
+                          className="mx-auto h-10 w-10 object-fill max-h-60 flex-shrink-0"
                           src={`data:image/jpeg;base64,${avatar}`}
                           alt=""
                         />
