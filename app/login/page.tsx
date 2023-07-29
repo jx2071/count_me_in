@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
 import postLoginAPI from "../api/LoginAPI";
-import { useAvatar } from "../context/avatarContext";
+import { useUserInfo } from "../context/userInfoContext";
 
 export default function LoginPage() {
   const [loginData, setLoginData] = useState({
@@ -16,7 +16,7 @@ export default function LoginPage() {
   const { email, password } = loginData;
   const [incorrectLogin, setIncorrectLogin] = useState(false);
   const [logedIn, setLogedIn] = useState(false);
-  const { setAvatar } = useAvatar();
+  const { setUserInfo } = useUserInfo();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -27,15 +27,17 @@ export default function LoginPage() {
       setIncorrectLogin,
       setLogedIn,
       setLoginData,
-      setAvatar
+      setUserInfo
     );
   };
 
   useEffect(() => {
-    if (logedIn) {
-      //window.location.href = window.sessionStorage.getItem("previous") ?? "/";
+    const previousPage = window.sessionStorage.getItem("previous");
+    if (logedIn && previousPage) {
+      window.location.href = previousPage;
     }
   }, [logedIn]);
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-12 lg:px-8">

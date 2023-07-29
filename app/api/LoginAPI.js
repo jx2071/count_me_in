@@ -5,7 +5,7 @@ export default async function postLoginAPI(
   setIncorrectLogin,
   setLogedIn,
   setLoginData,
-  setAvatar
+  setUserInfo
 ) {
   const { email, password } = loginData;
   const hashedPassword = sha256(password + email);
@@ -19,15 +19,16 @@ export default async function postLoginAPI(
     .then((response) => {
       setLogedIn(true);
       setIncorrectLogin(false);
-      setAvatar(response.data.avatar);
       let userInfo = {
         user_name: response.data.user_name,
         first_name: response.data.first_name,
         last_name: response.data.last_name,
         gender: response.data.gender,
-        token: response.data.token,
+        avatar: response.data.avatar,
       };
+      setUserInfo(userInfo);
       window.sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+      window.sessionStorage.setItem("Token", response.data.token);
     })
     .catch((error) => {
       setIncorrectLogin(true);

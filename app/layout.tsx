@@ -3,7 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "./components/Navbar";
-import { AvatarProvider } from "./context/avatarContext";
+import { UserInfoProvider } from "./context/userInfoContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,14 +21,14 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/logo.png" />
       </head>
-      <AvatarProvider>
+      <UserInfoProvider>
         <body className={inter.className}>
           <Navbar />
           <div className="flex min-h-screen flex-col items-center justify-between p-24">
             {children}
           </div>
         </body>
-      </AvatarProvider>
+      </UserInfoProvider>
     </html>
   );
 }
