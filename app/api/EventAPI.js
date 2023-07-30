@@ -11,7 +11,7 @@ export default async function fetchEventAPIs(
   axios
     .get(eventAPI)
     .then((response) => {
-      setEventData(response.data);
+      setEventData(response.data.event);
       setLoading(false);
     })
     .catch((error) => {
