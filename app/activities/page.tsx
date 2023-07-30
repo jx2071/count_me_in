@@ -23,6 +23,7 @@ export default function Discover() {
   useEffect(() => {
     const token = sessionStorage.getItem("Token");
     if (!token) {
+      alert("Please login first!");
       window.location.href = "/login";
     }
     fetchActivitiesAPI(token, setEvents, setLoading);

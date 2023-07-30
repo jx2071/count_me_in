@@ -18,6 +18,7 @@ import {
 } from "@heroicons/react/20/solid";
 import GoogleMap from "../components/GoogleMap";
 import NotFound from "../not-found";
+
 export type EventDetail = {
   id: string;
   name: string;
@@ -36,88 +37,98 @@ export type EventDetail = {
   imageUrl: string;
 };
 
-const timeline = [
-  {
-    id: 1,
-    content: "Event Created By",
-    target: "aaa",
-    href: "#",
-    date: "Sep 20",
-    datetime: "2020-09-20",
-    icon: FlagIcon,
-    iconBackground: "bg-blue-500",
-  },
-  {
-    id: 2,
-    content: "Joined event by",
-    target: "Bethany Blake",
-    href: "#",
-    date: "Sep 22",
-    datetime: "2020-09-22",
-    icon: UserPlusIcon,
-    iconBackground: "bg-green-500",
-  },
-  {
-    id: 3,
-    content: "Joined event by",
-    target: "Katherine Snyder",
-    href: "#",
-    date: "Sep 22",
-    datetime: "2020-09-22",
-    icon: UserPlusIcon,
-    iconBackground: "bg-green-500",
-  },
-  {
-    id: 4,
-    content: "Left event by",
-    target: "Bethany Blake",
-    href: "#",
-    date: "Sep 30",
-    datetime: "2020-09-30",
-    icon: UserMinusIcon,
-    iconBackground: "bg-yellow-500",
-  },
-  {
-    id: 5,
-    content: "Joined event by",
-    target: "bbb",
-    href: "#",
-    date: "Oct 4",
-    datetime: "2020-10-04",
-    icon: UserPlusIcon,
-    iconBackground: "bg-green-500",
-  },
-  {
-    id: 6,
-    content: "Event date changed",
-    target: "",
-    href: "#",
-    date: "Oct 5",
-    datetime: "2020-10-05",
-    icon: PencilSquareIcon,
-    iconBackground: "bg-blue-500",
-  },
-  {
-    id: 7,
-    content: "Event paused",
-    target: "",
-    href: "#",
-    date: "Oct 5",
-    datetime: "2020-10-05",
-    icon: HandRaisedIcon,
-    iconBackground: "bg-red-500",
-  },
-  {
-    id: 8,
-    content: "Event started",
-    target: "",
-    href: "#",
-    date: "Oct 6",
-    datetime: "2020-10-06",
-    icon: RocketLaunchIcon,
-    iconBackground: "bg-blue-500",
-  },
-];
+export type Timeline = {
+  action_type: string | null;
+  backgroundType: string | null;
+  date: string | null;
+  time: string | null;
+  detail: string | null;
+  full_name: string | null;
+  user_name: string | null;
+};
+
+// const timeline = [
+//   {
+//     id: 1,
+//     content: "Event Created By",
+//     target: "aaa",
+//     href: "#",
+//     date: "Sep 20",
+//     datetime: "2020-09-20",
+//     icon: FlagIcon,
+//     iconBackground: "bg-blue-500",
+//   },
+//   {
+//     id: 2,
+//     content: "Joined event by",
+//     target: "Bethany Blake",
+//     href: "#",
+//     date: "Sep 22",
+//     datetime: "2020-09-22",
+//     icon: UserPlusIcon,
+//     iconBackground: "bg-green-500",
+//   },
+//   {
+//     id: 3,
+//     content: "Joined event by",
+//     target: "Katherine Snyder",
+//     href: "#",
+//     date: "Sep 22",
+//     datetime: "2020-09-22",
+//     icon: UserPlusIcon,
+//     iconBackground: "bg-green-500",
+//   },
+//   {
+//     id: 4,
+//     content: "Left event by",
+//     target: "Bethany Blake",
+//     href: "#",
+//     date: "Sep 30",
+//     datetime: "2020-09-30",
+//     icon: UserMinusIcon,
+//     iconBackground: "bg-yellow-500",
+//   },
+//   {
+//     id: 5,
+//     content: "Joined event by",
+//     target: "bbb",
+//     href: "#",
+//     date: "Oct 4",
+//     datetime: "2020-10-04",
+//     icon: UserPlusIcon,
+//     iconBackground: "bg-green-500",
+//   },
+//   {
+//     id: 6,
+//     content: "Event date changed",
+//     target: "",
+//     href: "#",
+//     date: "Oct 5",
+//     datetime: "2020-10-05",
+//     icon: PencilSquareIcon,
+//     iconBackground: "bg-blue-500",
+//   },
+//   {
+//     id: 7,
+//     content: "Event paused",
+//     target: "",
+//     href: "#",
+//     date: "Oct 5",
+//     datetime: "2020-10-05",
+//     icon: HandRaisedIcon,
+//     iconBackground: "bg-red-500",
+//   },
+//   {
+//     id: 8,
+//     content: "Event started",
+//     target: "",
+//     href: "#",
+//     date: "Oct 6",
+//     datetime: "2020-10-06",
+//     icon: RocketLaunchIcon,
+//     iconBackground: "bg-blue-500",
+//   },
+// ];
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -127,35 +138,47 @@ function progress(current: number, max: number) {
   return (current / max) * 100 + "%";
 }
 
+function EventIcon({ iconName }: { iconName: string }) {
+  switch (iconName) {
+    case "join":
+      return <UserPlusIcon className="h-5 w-5 text-white" aria-hidden="true" />;
+    case "leave":
+      return (
+        <UserMinusIcon className="h-5 w-5 text-white" aria-hidden="true" />
+      );
+    case "start":
+      return (
+        <RocketLaunchIcon className="h-5 w-5 text-white" aria-hidden="true" />
+      );
+    case "pause":
+      return (
+        <HandRaisedIcon className="h-5 w-5 text-white" aria-hidden="true" />
+      );
+    case "edit":
+      return (
+        <PencilSquareIcon className="h-5 w-5 text-white" aria-hidden="true" />
+      );
+    case "create":
+      return <FlagIcon className="h-5 w-5 text-white" aria-hidden="true" />;
+    default:
+      return null;
+  }
+}
+
 export default function Event() {
   const params = useSearchParams();
 
   const eventId = params.get("eventId");
 
-  const [eventData, setEventData] = useState<EventDetail>({
-    id: "",
-    name: "",
-    category: "",
-    start_time: "",
-    duration: "",
-    location: "",
-    max_person: 1,
-    current_person: 1,
-    detail_location: "",
-    gather_location: "",
-    requirement: null,
-    event_descr: null,
-    create_time: "",
-    event_owner: "",
-    imageUrl: "",
-  });
+  const [eventData, setEventData] = useState<EventDetail>({} as EventDetail);
+  const [timeline, setTimeline] = useState<Timeline[]>([] as Timeline[]);
 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const [showMap, setShowMap] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchEventAPIs(eventId, setEventData, setLoading, setError);
+    fetchEventAPIs(eventId, setEventData, setTimeline, setLoading, setError);
     console.log(eventData);
   }, []);
 
@@ -313,7 +336,7 @@ export default function Event() {
                   <div className="relative flex space-x-3 mb-5">Status</div>
                   <ul role="list" className="-mb-8">
                     {timeline.map((event, eventIdx) => (
-                      <li key={event.id}>
+                      <li key={eventIdx}>
                         <div className="relative pb-8">
                           {eventIdx !== timeline.length - 1 ? (
                             <span
@@ -326,32 +349,28 @@ export default function Event() {
                             <div>
                               <span
                                 className={classNames(
-                                  event.iconBackground,
+                                  event.backgroundType ?? "",
                                   "h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white"
                                 )}
                               >
-                                <event.icon
-                                  className="h-5 w-5 text-white"
-                                  aria-hidden="true"
-                                />
+                                <EventIcon iconName={event.action_type ?? ""} />
                               </span>
                             </div>
                             <div className="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
                               <div>
                                 <p className="text-sm text-gray-500">
-                                  {event.content}{" "}
                                   <a
-                                    href={event.href}
+                                    href={event.user_name ?? ""}
                                     className="font-medium text-gray-900"
                                   >
-                                    {event.target}
-                                  </a>
+                                    {event.full_name}
+                                  </a>{" "}
+                                  {event.action_type}
+                                  {" the event. "}
                                 </p>
                               </div>
                               <div className="whitespace-nowrap text-right text-sm text-gray-500">
-                                <time dateTime={event.datetime}>
-                                  {event.date}
-                                </time>
+                                <time>{event.date?.slice(5)}</time>
                               </div>
                             </div>
                           </div>
