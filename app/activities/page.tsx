@@ -19,9 +19,9 @@ export type Event = {
 export default function Discover() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const token = sessionStorage.getItem("Token");
 
   useEffect(() => {
+    const token = sessionStorage.getItem("Token");
     if (!token) {
       window.location.href = "/login";
     }
@@ -78,114 +78,126 @@ export default function Discover() {
       </ul>
     );
   } else if (loading === false) {
-    return (
-      <ul
-        role="list"
-        className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2"
-      >
-        {events &&
-          events.map((event) => (
-            <li
-              key={event.id}
-              className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow hover:shadow-slate-900"
-            >
-              <div className="flex flex-1 flex-col p-8">
-                <img
-                  className="mx-auto w-full object-cover max-h-60 flex-shrink-0"
-                  style={{ height: "280px" }}
-                  src={`data:image/jpeg;base64,${event.imageUrl}`}
-                  alt=""
-                />
-                <h2 className="mt-6 text-lg font-medium text-gray-900">
-                  {event.name}
-                </h2>
-                <dl className="mt-4 gap-2 flex flex-grow flex-col justify-between text-left">
-                  <dt className="sr-only">Category</dt>
-                  <dd className="text-sm text-gray-500">
-                    <span className="text-black">📜 Category: </span>{" "}
-                    {event.category}
-                  </dd>
-                  <dt className="sr-only">Start Time</dt>
-                  <dd className="text-sm text-gray-500">
-                    <span className="text-black">📅 Start Time: </span>
-                    {event.start_time}
-                  </dd>
-                  <dd className="text-sm text-gray-500">
-                    <span className="text-black">🌍 Location: </span>
-                    {event.location}
-                  </dd>
-                  <dd className="text-sm text-gray-500">
-                    <span className="text-black">⏳ Duration: </span>
-                    {event.duration} Hours
-                  </dd>
-                  <dt className="sr-only">Progress</dt>
-                  <dd className="mt-3 flex flex-row">
-                    {event.current_person !== event.max_person ? (
-                      <>
-                        <div className="w-3/4 bg-green-100 rounded-full h-1.5 mt-2 dark:bg-green-500 ">
-                          <div
-                            className="bg-green-600 h-1.5 rounded-full dark:bg-green-500"
-                            style={{
-                              width: progress(
-                                event.current_person,
-                                event.max_person
-                              ),
-                            }}
-                          ></div>
-                        </div>
-                        <div className="ml-2 inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                          {event.current_person}/{event.max_person}
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="w-3/4 bg-red-100 rounded-full h-1.5 mt-2 dark:bg-red-500 ">
-                          <div
-                            className="bg-red-600 h-1.5 rounded-full dark:bg-red-500"
-                            style={{
-                              width: progress(
-                                event.current_person,
-                                event.max_person
-                              ),
-                            }}
-                          ></div>
-                        </div>
-                        <div className="ml-2 inline-flex items-center rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20">
-                          {event.current_person}/{event.max_person}
-                        </div>
-                      </>
-                    )}
-                  </dd>
-                </dl>
-              </div>
-              <div>
-                <div className="-mt-px flex divide-x divide-gray-200">
-                  <div className="flex w-0 flex-1">
-                    <a className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900">
-                      <UserPlusIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                      Join
-                    </a>
-                  </div>
-                  <div className="-ml-px flex w-0 flex-1">
-                    <Link
-                      href={`/event?eventId=${event.id}`}
-                      className="cursor-pointer relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
-                    >
-                      <FireIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                      Details
-                    </Link>
+    if (events.length !== 0) {
+      return (
+        <ul
+          role="list"
+          className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2"
+        >
+          {events &&
+            events.map((event) => (
+              <li
+                key={event.id}
+                className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow hover:shadow-slate-900"
+              >
+                <div className="flex flex-1 flex-col p-8">
+                  <img
+                    className="mx-auto w-full object-cover max-h-60 flex-shrink-0"
+                    style={{ height: "280px" }}
+                    src={`data:image/jpeg;base64,${event.imageUrl}`}
+                    alt=""
+                  />
+                  <h2 className="mt-6 text-lg font-medium text-gray-900">
+                    {event.name}
+                  </h2>
+                  <dl className="mt-4 gap-2 flex flex-grow flex-col justify-between text-left">
+                    <dt className="sr-only">Category</dt>
+                    <dd className="text-sm text-gray-500">
+                      <span className="text-black">📜 Category: </span>{" "}
+                      {event.category}
+                    </dd>
+                    <dt className="sr-only">Start Time</dt>
+                    <dd className="text-sm text-gray-500">
+                      <span className="text-black">📅 Start Time: </span>
+                      {event.start_time}
+                    </dd>
+                    <dd className="text-sm text-gray-500">
+                      <span className="text-black">🌍 Location: </span>
+                      {event.location}
+                    </dd>
+                    <dd className="text-sm text-gray-500">
+                      <span className="text-black">⏳ Duration: </span>
+                      {event.duration} Hours
+                    </dd>
+                    <dt className="sr-only">Progress</dt>
+                    <dd className="mt-3 flex flex-row">
+                      {event.current_person !== event.max_person ? (
+                        <>
+                          <div className="w-3/4 bg-green-100 rounded-full h-1.5 mt-2 dark:bg-green-500 ">
+                            <div
+                              className="bg-green-600 h-1.5 rounded-full dark:bg-green-500"
+                              style={{
+                                width: progress(
+                                  event.current_person,
+                                  event.max_person
+                                ),
+                              }}
+                            ></div>
+                          </div>
+                          <div className="ml-2 inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                            {event.current_person}/{event.max_person}
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="w-3/4 bg-red-100 rounded-full h-1.5 mt-2 dark:bg-red-500 ">
+                            <div
+                              className="bg-red-600 h-1.5 rounded-full dark:bg-red-500"
+                              style={{
+                                width: progress(
+                                  event.current_person,
+                                  event.max_person
+                                ),
+                              }}
+                            ></div>
+                          </div>
+                          <div className="ml-2 inline-flex items-center rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20">
+                            {event.current_person}/{event.max_person}
+                          </div>
+                        </>
+                      )}
+                    </dd>
+                  </dl>
+                </div>
+                <div>
+                  <div className="-mt-px flex divide-x divide-gray-200">
+                    <div className="-ml-px flex w-0 flex-1">
+                      <Link
+                        href={`/event?eventId=${event.id}`}
+                        className="cursor-pointer relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                      >
+                        <FireIcon
+                          className="h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        Details
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </li>
-          ))}
-      </ul>
-    );
+              </li>
+            ))}
+        </ul>
+      );
+    } else {
+      return (
+        <div className="flex flex-col items-center justify-center">
+          <h1 className="mt-16 text-3xl font-bold text-gray-900">
+            No Activities
+          </h1>
+          <p className="text-gray-500">
+            You have not joined any activities yet.
+          </p>
+          <div className="text-center">
+            <button
+              className="mt-4 p-3 rounded-full font-bold text-white text-xl bg-sky-300 transition duration-150 hover:bg-amber-200 hover:text-sky-300"
+              onClick={() => (window.location.href = "/discover")}
+            >
+              Start Exploring
+            </button>
+          </div>
+        </div>
+      );
+    }
   }
 }
