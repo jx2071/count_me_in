@@ -89,7 +89,7 @@ export default function Discover() {
                 <img
                   className="mx-auto w-full object-cover max-h-60 flex-shrink-0"
                   style={{ height: "280px" }}
-                  src={`data:image/jpeg;base64,${event.imageUrl}`}
+                  src={`data:image/jpg;charset=utf-8;base64,${event.imageUrl}`}
                   alt=""
                 />
                 <h2 className="mt-6 text-lg font-medium text-gray-900">
