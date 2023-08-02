@@ -11,7 +11,7 @@ export default async function postEventCreateAPI(
   axios
     .post(eventAPI, eventData, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
       },
     })
     .then((response) => {

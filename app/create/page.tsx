@@ -133,32 +133,49 @@ export default function CreatePage() {
     return true;
   };
 
+  function fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  }
+
+  async function preparePayload(eventData: any, eventId: string): Promise<any> {
+    let fileBase64: string | null = null;
+
+    if (eventData.file) {
+      const dataUrl: string = await fileToBase64(eventData.file);
+      fileBase64 = dataUrl.split(",")[1]; // Remove the "data:*/*;base64," prefix
+    }
+
+    return {
+      eventId: eventId,
+      eventName: eventData.eventName,
+      category: eventData.category,
+      size: eventData.size,
+      time: eventData.time,
+      duration: eventData.duration,
+      location: eventData.location ?? "",
+      city: eventData.city ?? "",
+      state: eventData.state ?? "",
+      gatherLocation: eventData.gatherLocation ?? "",
+      detail: eventData.detail ?? "",
+      requirement: eventData.requirement ?? "",
+      token:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJqeXh1OTZAZ21haWwuY29tIn0.uhSouvFWwUGdHa6hx2JN-veRBkVTcADO28yaHkugVKA",
+      file: fileBase64,
+    };
+  }
+
   //Submit the form data to the backend
   const handleSubmit = async () => {
     if (!checkRequireField()) {
       return;
     }
-    console.log(token);
-
-    const formData = new FormData();
-    formData.append("eventId", eventId);
-    formData.append("eventName", eventData.eventName);
-    formData.append("category", eventData.category);
-    formData.append("size", eventData.size.toString());
-    formData.append("time", eventData.time);
-    formData.append("duration", eventData.duration);
-    formData.append("location", eventData.location ?? "");
-    formData.append("city", eventData.city ?? "");
-    formData.append("state", eventData.state ?? "");
-    formData.append("gatherLocation", eventData.gatherLocation ?? "");
-    formData.append("detail", eventData.detail ?? "");
-    formData.append("requirement", eventData.requirement ?? "");
-    formData.append(
-      "token",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJqeXh1OTZAZ21haWwuY29tIn0.uhSouvFWwUGdHa6hx2JN-veRBkVTcADO28yaHkugVKA"
-    );
-    formData.append("file", eventData.file ?? "");
-    await postEventCreateAPI(formData, setAlertShow, setErrorMsg, setErrorShow);
+    const payload = await preparePayload(eventData, eventId);
+    await postEventCreateAPI(payload, setAlertShow, setErrorMsg, setErrorShow);
   };
 
   //Automatically close the error alert after 5 seconds
