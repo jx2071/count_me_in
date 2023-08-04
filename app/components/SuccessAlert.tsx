@@ -10,12 +10,8 @@ interface Props {
   detail: string | null;
 }
 
-export default function SuccessAlert({
-  show,
-  setShow,
-  message,
-  detail,
-}: Props) {
+export default function SuccessAlert(props: Props) {
+  const { show, setShow, message, detail } = props;
   return (
     <>
       {/* Global notification live region, render this permanently at the end of the document */}

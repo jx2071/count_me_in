@@ -34,6 +34,7 @@ export default function CreatePage() {
 
   const [token, setToken] = useState("");
   const locationRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     if (typeof window !== "undefined" && window.google && locationRef.current) {
       const autocomplete = new window.google.maps.places.Autocomplete(
@@ -186,6 +187,7 @@ export default function CreatePage() {
       return () => clearInterval(interval);
     }
   }, [errorShow]);
+
   return (
     <div className="block">
       <Script
@@ -204,7 +206,8 @@ export default function CreatePage() {
               Event
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
-              Let's start with the basic information that will be displayed on
+              Let&apos;s start with the basic information that will be displayed
+              on
             </p>
           </div>
 
@@ -657,7 +660,7 @@ export default function CreatePage() {
                 onClick={handleSubmit}
                 className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Save
+                Create
               </button>
             </div>
           </form>
@@ -666,7 +669,7 @@ export default function CreatePage() {
       <SuccessAlert
         show={alertShow}
         setShow={() => {
-          setAlertShow(!alertShow);
+          setAlertShow(true);
         }}
         message={"Event Created Successfully"}
         detail={""}

@@ -28,7 +28,7 @@ export default async function postLoginAPI(
       };
       setUserInfo(userInfo);
       window.sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
-      window.sessionStorage.setItem("Token", response.data.token);
+      window.sessionStorage.setItem("token", response.data.token);
     })
     .catch((error) => {
       setIncorrectLogin(true);

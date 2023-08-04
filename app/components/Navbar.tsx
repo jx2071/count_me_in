@@ -3,7 +3,6 @@ import { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserInfoData, useUserInfo } from "../context/userInfoContext";
 
@@ -52,17 +51,17 @@ export default function Navbar() {
                 </Disclosure.Button>
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center bg-white rounded">
+                <div className="flex flex-shrink-0 items-center  rounded">
                   <img
                     className="h-10 w-auto"
-                    src="/logo.png"
+                    src="/logo-full.png"
                     alt="Count Me In"
                   />
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <Link
+                      <a
                         key={item.name}
                         href={item.href}
                         className={classNames(
@@ -74,7 +73,7 @@ export default function Navbar() {
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
-                      </Link>
+                      </a>
                     ))}
                   </div>
                 </div>
@@ -123,21 +122,21 @@ export default function Navbar() {
                       {!avatar ? (
                         <Menu.Item>
                           {({ active }) => (
-                            <button
+                            <a
                               onClick={() => {
                                 window.sessionStorage.setItem(
                                   "previous",
                                   window.location.href
                                 );
-                                window.location.href = "login";
                               }}
+                              href="/login"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-left text-gray-700 w-full"
                               )}
                             >
                               Sign in
-                            </button>
+                            </a>
                           )}
                         </Menu.Item>
                       ) : (
@@ -161,6 +160,7 @@ export default function Navbar() {
                                 onClick={() => {
                                   window.sessionStorage.clear();
                                   setUserInfo({} as UserInfoData);
+                                  window.location.href = "/";
                                 }}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",

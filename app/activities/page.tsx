@@ -21,7 +21,7 @@ export default function Discover() {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const token = sessionStorage.getItem("Token");
+    const token = sessionStorage.getItem("token");
     if (!token) {
       alert("Please login first!");
       window.location.href = "/login";
@@ -42,7 +42,7 @@ export default function Discover() {
         {sketelon.map((event) => (
           <li
             key={event}
-            className=" animate-pulse col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow hover:shadow-slate-900"
+            className=" animate-pulse col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow hover:shadow-slate-900 "
           >
             <div
               className="flex flex-1 flex-col p-8"
@@ -89,7 +89,8 @@ export default function Discover() {
             events.map((event) => (
               <li
                 key={event.id}
-                className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow hover:shadow-slate-900"
+                className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow hover:shadow-slate-900 "
+                style={{ minWidth: "400px" }}
               >
                 <div className="flex flex-1 flex-col p-8">
                   <img

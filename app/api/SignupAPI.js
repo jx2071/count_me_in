@@ -4,7 +4,8 @@ import { sha256 } from "js-sha256";
 export default async function postSignupAPI(
   userData,
   setUserInfo,
-  setSignupSuccess
+  setSignupSuccess,
+  setLoading
 ) {
   const { name, email, gender, password } = userData;
   const hashedPassword = sha256(password + email);
@@ -27,7 +28,8 @@ export default async function postSignupAPI(
       };
       setUserInfo(userInfo);
       window.sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
-      window.sessionStorage.setItem("Token", response.data.token);
+      window.sessionStorage.setItem("token", response.data.token);
+      setLoading(false);
       setSignupSuccess(true);
     })
     .catch((error) => {

@@ -3,7 +3,9 @@ import { UserPlusIcon, FireIcon } from "@heroicons/react/20/solid";
 import fetchDiscoverAPIs from "../api/DiscoverAPI";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-
+import postEventActionAPI from "../api/EventActionAPI";
+import ErrorAlert from "../components/ErrorAlert";
+import SuccessAlert from "../components/SuccessAlert";
 export type Event = {
   id: string;
   name: string;
@@ -19,14 +21,35 @@ export type Event = {
 export default function Discover() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [token, setToken] = useState<string | null>(null);
+  const [tokenExpireError, setTokenExpireError] = useState<boolean>(false);
+  const [joinSuccess, setJoinSuccess] = useState<boolean>(false);
   useEffect(() => {
     fetchDiscoverAPIs(setEvents, setLoading);
+    setToken(window.sessionStorage.getItem("token"));
   }, []);
 
+  const handleJoin = async (eventId: string) => {
+    if (!token) {
+      window.sessionStorage.setItem("previous", window.location.href);
+      window.location.href = "/login";
+      return;
+    }
+    const payload = {
+      action: "join",
+      eventId: eventId,
+      token: token,
+    };
+    await postEventActionAPI(payload, setTokenExpireError, setJoinSuccess);
+    if (tokenExpireError) {
+      window.sessionStorage.setItem("previous", window.location.href);
+      window.location.href = "/login";
+      return;
+    }
+  };
   const progress = (current: number, max: number) => {
     return (current / max) * 100 + "%";
   };
-
   const sketelon = [1, 2, 3, 4, 5, 6];
   if (loading === true) {
     return (
@@ -79,6 +102,22 @@ export default function Discover() {
         role="list"
         className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2"
       >
+        <ErrorAlert
+          show={tokenExpireError}
+          setShow={() => {
+            setTokenExpireError(false);
+          }}
+          message="Token Expired"
+          detail="Please login again"
+        />
+        <SuccessAlert
+          show={joinSuccess}
+          setShow={() => {
+            setJoinSuccess(false);
+          }}
+          message="Join Success"
+          detail="You have joined the event"
+        />
         {events &&
           events.map((event) => (
             <li
@@ -157,13 +196,17 @@ export default function Discover() {
               <div>
                 <div className="-mt-px flex divide-x divide-gray-200">
                   <div className="flex w-0 flex-1">
-                    <a className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900">
+                    <button
+                      onClick={() => handleJoin(event.id)}
+                      disabled={token ? false : true}
+                      className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                    >
                       <UserPlusIcon
                         className="h-5 w-5 text-gray-400"
                         aria-hidden="true"
                       />
                       Join
-                    </a>
+                    </button>
                   </div>
                   <div className="-ml-px flex w-0 flex-1">
                     <Link
