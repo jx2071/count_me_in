@@ -163,8 +163,7 @@ export default function CreatePage() {
       gatherLocation: eventData.gatherLocation ?? "",
       detail: eventData.detail ?? "",
       requirement: eventData.requirement ?? "",
-      token:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJqeXh1OTZAZ21haWwuY29tIn0.uhSouvFWwUGdHa6hx2JN-veRBkVTcADO28yaHkugVKA",
+      token: token,
       file: fileBase64,
     };
   }
