@@ -40,7 +40,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-12 lg:px-8">
+      <div className="bg-white px-20 py-10 rounded-xl">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in to your account
@@ -115,7 +115,7 @@ export default function LoginPage() {
               onClick={handleLogin}
               className="flex mt-6 w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Sign in
+              Sign in 🕺
             </button>
             <button
               onClick={() => {
@@ -123,7 +123,7 @@ export default function LoginPage() {
               }}
               className="flex mt-4 w-full justify-center rounded-md bg-gray-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-teal-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Sign up
+              Sign up 🌟
             </button>
           </div>
         </div>
@@ -185,7 +185,7 @@ export default function LoginPage() {
               <div className="w-full border-t border-gray-200" />
             </div>
             <div className="relative flex justify-center text-sm font-medium leading-6">
-              <span className="bg-gray-100 px-6 text-gray-900">
+              <span className="bg-white px-6 text-gray-900">
                 Or continue with
               </span>
             </div>
